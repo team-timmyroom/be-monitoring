@@ -1,0 +1,23 @@
+name: Backend Monitoring Server Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACTION_TOKEN }}
+          submodules: true
+
+      - name: Run Docker Containers
+        working-directory: ./config
+        run: docker-compose -f docker-compose.yml up -d
